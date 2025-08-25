@@ -8,7 +8,7 @@ function formatTime(num) {
 
 // Função para iniciar a contagem regressiva
 function startCountdown() {
-  const targetDate = new Date('2025-11-03T13:00:00-03:00').getTime();
+  const targetDate = new Date('2025-11-01T13:00:00-03:00').getTime(); // ✅ Evento dia 01/11
   const countdownElement = document.getElementById('countdown');
 
   const interval = setInterval(function() {
@@ -20,14 +20,17 @@ function startCountdown() {
       countdownElement.innerHTML = 'O evento começou!';
     } else {
       const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      const hours = Math.floor((distance / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((distance / (1000 * 60)) % 60);
+      const seconds = Math.floor((distance / 1000) % 60);
 
-      countdownElement.innerHTML = `${formatTime(days)}d ${formatTime(hours)}h ${formatTime(minutes)}m ${formatTime(seconds)}s`;
+      countdownElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
     }
   }, 1000);
 }
+
+startCountdown();
+
 
 // Google Calendar
 function buildGoogleCalendarUrl() {
